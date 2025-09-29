@@ -2,7 +2,7 @@ import csv
 import json
 
 # Input and output file names
-csv_file = "data/lead.csv"
+csv_file = "data/lead_for_app.csv"
 json_file = "data/lead.json"
 
 def csv_to_json(csv_file, json_file):
