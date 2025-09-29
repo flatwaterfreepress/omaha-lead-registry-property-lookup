@@ -12,6 +12,10 @@
 	table { margin-top: 1rem; border-collapse: collapse; width: 100%; }
 	td, th { border: 1px solid #ddd; padding: 8px; }
 	#reset { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; display: none; }
+	.message { margin-top: 1rem; padding: 0.75rem; border-radius: 4px; }
+	.low { background: #e8f5e9; border: 1px solid #81c784; }
+	.medium { background: #fffde7; border: 1px solid #ffeb3b; }
+	.high { background: #ffebee; border: 1px solid #e57373; }
   </style>
 </head>
 <body>
@@ -68,6 +72,29 @@
 		table += `<tr><th>${key}</th><td>${value}</td></tr>`;
 	  }
 	  table += '</table>';
+
+	  // Conditional message based on soil_high_lead_result
+	  let message = '';
+	  let cssClass = '';
+	  const value = parseFloat(record.soil_high_lead_result);
+
+	  if (!isNaN(value)) {
+		if (value < 200) {
+		  message = "Too low for remediation.";
+		  cssClass = "low";
+		} else if (value >= 200 && value < 400) {
+		  message = "Moderate level detected. Further assessment recommended.";
+		  cssClass = "medium";
+		} else if (value >= 400) {
+		  message = "High level detected. Action required.";
+		  cssClass = "high";
+		}
+	  }
+
+	  if (message) {
+		table += `<div class="message ${cssClass}">${message}</div>`;
+	  }
+
 	  details.innerHTML = table;
 	}
 
