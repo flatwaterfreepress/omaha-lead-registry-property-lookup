@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Omaha Address Lookup</title>
+  <style>
+	body { font-family: Arial, sans-serif; padding: 1rem; }
+	input { width: 100%; padding: 0.5rem; font-size: 1rem; }
+	ul { list-style: none; padding: 0; margin: 0; border: 1px solid #ccc; max-height: 150px; overflow-y: auto; }
+	li { padding: 0.5rem; cursor: pointer; }
+	li:hover { background: #eee; }
+	table { margin-top: 1rem; border-collapse: collapse; width: 100%; }
+	td, th { border: 1px solid #ddd; padding: 8px; }
+  </style>
+</head>
+<body>
+  <h2>Omaha Address Lookup</h2>
+  <input type="text" id="search" placeholder="Enter address...">
+  <ul id="suggestions"></ul>
+  <div id="details"></div>
+
+  <!-- Fuse.js for fuzzy search -->
+  <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
+  <script>
+	let data = [];   // will hold property records
+	let fuse;
+
+	// Load CSV converted to JSON
+	fetch("data/lead.json")
+	  .then(res => res.json())
+	  .then(json => {
+		data = json;
+		fuse = new Fuse(data, { keys: ['address'], threshold: 0.3 });
+	  });
+
+	const searchInput = document.getElementById('search');
+	const suggestions = document.getElementById('suggestions');
+	const details = document.getElementById('details');
+
+	searchInput.addEventListener('input', () => {
+	  const query = searchInput.value.trim();
+	  if (!query) {
+		suggestions.innerHTML = '';
+		return;
+	  }
+	  const results = fuse.search(query, { limit: 10 });
+	  suggestions.innerHTML = results.map(r => `<li data-addr="${r.item.address}">${r.item.address}</li>`).join('');
+	});
+
+	suggestions.addEventListener('click', e => {
+	  if (e.target.tagName === 'LI') {
+		const addr = e.target.getAttribute('data-addr');
+		const record = data.find(d => d.address === addr);
+		showDetails(record);
+		searchInput.value = addr;
+		suggestions.innerHTML = '';
+	  }
+	});
+
+	function showDetails(record) {
+	  if (!record) return;
+	  let table = '<table>';
+	  for (const [key, value] of Object.entries(record)) {
+		table += `<tr><th>${key}</th><td>${value}</td></tr>`;
+	  }
+	  table += '</table>';
+	  details.innerHTML = table;
+	}
+  </script>
+</body>
+</html>
