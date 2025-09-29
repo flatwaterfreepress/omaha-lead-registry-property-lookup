@@ -4,9 +4,13 @@
   <meta charset="UTF-8">
   <title>Omaha Address Lookup</title>
   <style>
-	body { font-family: Arial, sans-serif; padding: 1rem; }
-	input { width: 100%; padding: 0.5rem; font-size: 1rem; }
-	ul { list-style: none; padding: 0; margin: 0; border: 1px solid #ccc; max-height: 150px; overflow-y: auto; }
+	body { font-family: Arial, sans-serif; padding: 1rem; background: #eee; }
+	.container { background: #fff; padding: 2rem;  }
+	h2 { margin: 0; }
+	.chatter { color: #444; }
+	div.form { font-size: 0.8em; color: #777; margin-top: 2rem; }
+	input { width: 100%; margin: 1rem 0; padding: 0.5rem; font-size: 1rem; }
+	ul { border: 1px solid #eee; border-radius: 10; list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
 	li { padding: 0.5rem; cursor: pointer; }
 	li:hover { background: #eee; }
 	table { margin-top: 1rem; border-collapse: collapse; width: 100%; }
@@ -19,12 +23,20 @@
   </style>
 </head>
 <body>
+	<div class="container">
   <h2>Omaha Address Lookup</h2>
+  <p class="chatter">Chatter chatter chatter in here.</p>
   <input type="text" id="search" placeholder="Enter address...">
   <ul id="suggestions"></ul>
   <div id="details"></div>
   <button id="reset">Reset</button>
+	</div>
+  
+  <div class="form">
+	  <p>[ We could put a form down here and some details about getting in touch for a sample. ]</p>
+  </div>
 
+	
   <!-- Fuse.js for fuzzy search -->
   <script src="https://cdn.jsdelivr.net/npm/fuse.js@7.0.0"></script>
   <script>
@@ -80,13 +92,13 @@
 
 	  if (!isNaN(value)) {
 		if (value < 200) {
-		  message = "Too low for remediation.";
+		  message = "Sample message: Too low for remediation.";
 		  cssClass = "low";
 		} else if (value >= 200 && value < 400) {
-		  message = "Moderate level detected. Further assessment recommended.";
+		  message = "Sample message: Moderate level detected. Further assessment recommended.";
 		  cssClass = "medium";
 		} else if (value >= 400) {
-		  message = "High level detected. Action required.";
+		  message = "Sample message: High level detected. Action required.";
 		  cssClass = "high";
 		}
 	  }
