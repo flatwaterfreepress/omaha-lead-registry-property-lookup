@@ -16,11 +16,8 @@
 	table { margin-top: 1rem; border-collapse: collapse; width: 100%; }
 	td, th { border: 1px solid #ddd; padding: 8px; }
 	#reset { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; display: none; }
-	.message { margin-top: 1rem; padding: 0.75rem; border-radius: 4px; }
-	.low { background: #e8f5e9; border: 1px solid #81c784; }
-	.medium { background: #fffde7; border: 1px solid #ffeb3b; }
-	.high { background: #ffebee; border: 1px solid #e57373; }
-  </style>
+	.message { font-size: 0.8em; margin-top: 1rem; padding: 0.75rem; border-radius: 4px; border: 1px solid #eee; }
+	  </style>
 </head>
 <body>
 	<div class="container">
@@ -33,7 +30,7 @@
 	</div>
   
   <div class="form">
-	  <p>[ We could put a form down here and some details about getting in touch for a sample. ]</p>
+	  <p><strong>Get your soil tested: </strong> We could put a link/message here and details about getting in touch »</p>
   </div>
 
 	
@@ -92,13 +89,13 @@
 
 	  if (!isNaN(value)) {
 		if (value < 200) {
-		  message = "Sample message: Too low for remediation.";
+		  message = "[Sample conditional message 1: Less than 200]";
 		  cssClass = "low";
 		} else if (value >= 200 && value < 400) {
-		  message = "Sample message: Moderate level detected. Further assessment recommended.";
+		  message = "[Sample conditional message 2: Level 200-400]";
 		  cssClass = "medium";
 		} else if (value >= 400) {
-		  message = "Sample message: High level detected. Action required.";
+		  message = "[Sample conditional message 3: Level 400+]";
 		  cssClass = "high";
 		}
 	  }
