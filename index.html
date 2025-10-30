@@ -34,6 +34,8 @@
 	  </div>
 	  <input type="text" id="search" placeholder="Enter address" class="w-full pl-12 pr-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none text-md">
 	</div>
+	
+	<p id="records" class="text-xs font-light text-gray-400 mt-5"></p>
   
     
   <ul id="suggestions"></ul>
@@ -54,13 +56,14 @@
   <script>
 	let data = [];   // will hold property records
 	let fuse;
-
 	// Load CSV converted to JSON
 	fetch("data/lead.json")
 	  .then(res => res.json())
 	  .then(json => {
 		data = json;
 		fuse = new Fuse(data, { keys: ['address'], threshold: 0.3 });
+	
+		records.innerHTML = data.length.toLocaleString() + ' records in this database' ;
 	  });
 
 	const searchInput = document.getElementById('search');
@@ -68,6 +71,8 @@
 	const details = document.getElementById('details');
 	const message_text = document.getElementById('message');
 	const resetBtn = document.getElementById('reset');
+	const records = document.getElementById('records');
+
 
 	searchInput.addEventListener('input', () => {
 	  const query = searchInput.value.trim();
@@ -89,6 +94,8 @@
 		resetBtn.style.display = 'inline-block';
 	  }
 	});
+	
+		  
 
 	function showDetails(record) {
 	  if (!record) return;
