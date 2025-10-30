@@ -3,34 +3,49 @@
 <head>
   <meta charset="UTF-8">
   <title>Omaha Address Lookup</title>
+
+	<!-- Tailwind CDN -->  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
   <style>
-	body { font-family: Arial, sans-serif; padding: 1rem; background: #eee; }
-	.container { background: #fff; padding: 2rem;  }
-	h2 { margin: 0; }
-	.chatter { color: #444; }
-	div.form { font-size: 0.8em; color: #777; margin-top: 2rem; }
-	input { width: 100%; margin: 1rem 0; padding: 0.5rem; font-size: 1rem; }
-	ul { border: 1px solid #eee; border-radius: 10; list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
-	li { padding: 0.5rem; cursor: pointer; }
-	li:hover { background: #eee; }
-	table { margin-top: 1rem; border-collapse: collapse; width: 100%; }
-	td, th { border: 1px solid #ddd; padding: 8px; }
-	#reset { margin-top: 1rem; padding: 0.5rem 1rem; font-size: 1rem; display: none; }
-	.message { font-size: 0.8em; margin-top: 1rem; padding: 0.75rem; border-radius: 4px; border: 1px solid #eee; }
+	  
+	ul { border-radius: 10; list-style: none; padding: 0; margin: 0; max-height: 150px; overflow-y: auto; }
+	li { padding: 0.5rem; cursor: pointer; font-size: 0.9rem; }
+	li:hover { background: #efefef; }
+	table { border-collapse: collapse; }
+	th, td { padding: 14px; border-bottom: 1px solid #eee; }
+	tr:first-child td { border-top: 1px solid #eee; }
+	tr td:first-child { border-left: 1px solid #eee; }
+	tr td:last-child { border-right: 1px solid #eee; }
+	
+	#reset { display: none; }
 	  </style>
 </head>
-<body>
-	<div class="container">
-  <h2>Omaha Address Lookup</h2>
-  <p class="chatter">Chatter chatter chatter in here.</p>
-  <input type="text" id="search" placeholder="Enter address...">
-  <ul id="suggestions"></ul>
-  <div id="details"></div>
-  <button id="reset">Reset</button>
+<body class="bg-gray-50 p-6">
+	<div class="container p-8 bg-white border rounded-xl">
+    	
+		<h1 class="font-bold text-2xl mb-2">Omaha Lead Lookup</h1>
+  		<p class="text-gray-500 mb-8 text-md">The Environmental Protection Agency has sampled soil for lead at more than 40,000 properties across Omaha’s east side. Type in an address to see how much lead was measured there.</p>
+  
+  
+  <div class="relative mb-4">
+	  <div class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">
+		  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.35-4.35"></path></svg>
+	  </div>
+	  <input type="text" id="search" placeholder="Enter address" class="w-full pl-12 pr-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none text-md">
 	</div>
   
-  <div class="form">
-	  <p><strong>Get your soil tested: </strong> We could put a link/message here and details about getting in touch »</p>
+    
+  <ul id="suggestions"></ul>
+  <div id="details"></div>
+  <button id="reset" class="border py-1 px-2 text-xs rounded-full mt-4 text-gray-500 hover:text-blue-600 border-gray-100">Reset</button>
+	</div>
+  
+  <div id="footer" class="mt-5">
+	  <p class="text-xs text-gray-400 mb-4">Source: City of Omaha, Omaha Lead Registry</p>
+	  <!-- 
+		  <p class="text-xs text-gray-500 font-light leading-[1.2rem] mb-4"><span class="font-semibold">More information: </span>To learn more about the City of Omaha’s lead program contact its Lead Information Office at (402) 731-3045 or <a href="mailto:contact@omahalead.org" class="underline"> contact@omahalead.org</a>. You can learn more about lead and access other services including potential home inspections from the Douglas County Health Department. More information on the Omaha Lead Superfund site and contacts for site managers can be found on the EPA’s website.</p>
+		-->
   </div>
 
 	
@@ -51,6 +66,7 @@
 	const searchInput = document.getElementById('search');
 	const suggestions = document.getElementById('suggestions');
 	const details = document.getElementById('details');
+	const message_text = document.getElementById('message');
 	const resetBtn = document.getElementById('reset');
 
 	searchInput.addEventListener('input', () => {
@@ -76,33 +92,36 @@
 
 	function showDetails(record) {
 	  if (!record) return;
-	  let table = '<table>';
-	  for (const [key, value] of Object.entries(record)) {
-		table += `<tr><th>${key}</th><td>${value}</td></tr>`;
-	  }
-	  table += '</table>';
+	  let table = '<div class="border p-6 mt-7 rounded-lg"><h3 class="text-2xl font-semibold mb-4">' + record.address + '</h3><p id="message"></p><table class="table-auto w-full rounded-sm"><tbody>';
+	  
+	  table += '<tr><td class="font-medium">Highest Test Result</td><td>' + record.soil_high_lead_result + ' ppm</td></tr><tr><td class="font-medium">Soil Test Sample Date</td><td>' + record.soil_sampled_date + '</td></tr><tr><td class="font-medium">Soil Remediation Status</td><td>' + record.soil_remediation_status + '</td></tr><tr><td class="font-medium">Soil Test Sample Date</td><td>' + record.soil_remediation_date + '</td></tr></tbody></table>';
+	  
+	  let message_wrapper = '';
 
 	  // Conditional message based on soil_high_lead_result
 	  let message = '';
 	  let cssClass = '';
 	  const value = parseFloat(record.soil_high_lead_result);
+	  const status = record.soil_remediation_status;
 
 	  if (!isNaN(value)) {
-		if (value < 200) {
-		  message = "[Sample conditional message 1: Less than 200]";
+		if (value >= 400 && status == "Remediated" ) {
+		  message = "An EPA sample on (date) found a portion of this property contained more than 400 ppm of lead. The property was remediated on (date). Soil containing higher concentrations of lead than 400 ppm were removed and replaced with fill dirt. If you have more questions about remediation or this property call the city’s Lead Information Office at (402) 731-3045 or contact@omahalead.org. You can learn more about lead and access other services including potential home inspections from the Douglas County Health Department.";
 		  cssClass = "low";
-		} else if (value >= 200 && value < 400) {
-		  message = "[Sample conditional message 2: Level 200-400]";
+		} else if (value >= 400 && status != "Remediated") {
+		  message = "An EPA sample on (date) found a portion of this property contained more than 400 ppm of lead. This may qualify the owner for a free remediation from the City of Omaha. Contact the city’s Lead Information Office at (402) 731-3045 or contact@omahalead.org. You can learn more about lead and access other services including potential home inspections from the Douglas County Health Department.";
 		  cssClass = "medium";
-		} else if (value >= 400) {
-		  message = "[Sample conditional message 3: Level 400+]";
+		} else if (value >= 200 && value < 400) {
+		  message = "An EPA sample on (date) found a portion of this property contained less than the required concentration of lead for cleanup in Omaha. It does have a concentration of more than 200 ppm. Under Oct. 16, 2025 EPA guidance, soil above 200 parts per million should be screened for further evaluation and can result in cleanup among other options to ensure protectiveness. If you have more questions about remediation or this property call the city’s Lead Information Office at (402) 731-3045 or contact@omahalead.org. You can learn more about lead and access other services including potential home inspections from the Douglas County Health Department.";
 		  cssClass = "high";
+		} else if (value >= 100 && value < 200 ) {
+			message = "An EPA sample on (date) found a portion of this property contained less than the required concentration of lead for cleanup in Omaha. It does have a concentration of more than 100 ppm. On Jan. 17 2024 the EPA, under the administration of President Joe Biden, advised that soil above 100 ppm should be evaluated when there are multiple exposures to lead through things like paint, service lines or historic use of leaded gasoline. On Oct. 16, 2025 the EPA under President Donald Trump, raised that guidance to 200 ppm whether an area has multiple exposures to lead or not.";
 		}
 	  }
 
 	  if (message) {
-		table += `<div class="message ${cssClass}">${message}</div>`;
-	  }
+		  table += `<div class="text-sm mt-6 font-light text-gray-500 leading-5 message ${cssClass}"><p class="font-medium mb-2">About this property</p><p>${message}</p></div>`;
+		}
 
 	  details.innerHTML = table;
 	}
