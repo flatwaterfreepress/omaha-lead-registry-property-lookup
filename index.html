@@ -96,7 +96,7 @@
 
 	function showDetails(record) {
 	  if (!record) return;
-	  let table = '<div class="border shadow-sm mt-7 rounded-lg"><h3 class="text-2xl font-semibold p-6 bg-blue-950 text-white rounded-t-xl">' + record.address + '</h3><p id="message"></p><table class="table-auto w-full rounded-sm text-md"><tbody>';
+	  let table = '<div class="border shadow-sm mt-7 rounded-lg"><h3 class="text-2xl font-semibold p-6 bg-gray-900 text-white rounded-t-xl">' + record.address + '</h3><p id="message"></p><table class="table-auto w-full rounded-sm text-md"><tbody>';
 	  
 	  table += '<tr><td>Highest Test Result</td><td class="font-medium">' + record.soil_high_lead_result + ' ppm</td></tr><tr><td>Soil Test Sample Date</td><td class="font-medium">' + record.soil_sampled_date + '</td></tr><tr><td>Remediation Status</td><td class="font-medium">' + record.soil_remediation_status + '</td></tr><tr><td>Remediation Date</td><td class="font-medium">' + record.soil_remediation_date + '</td></tr></tbody></table>';
 	  
@@ -123,7 +123,8 @@
 		} else if (value >= 100 && value < 200 ) {
 			message = "<p>An EPA sample on " + sample_date + " found a portion of this property contained less than the required concentration of lead for cleanup in Omaha. It does have a concentration of more than 100 ppm.</p><p class='mt-2'>On Jan. 17 2024 the EPA, under the administration of President Joe Biden, advised that soil above 100 ppm should be evaluated when there are multiple exposures to lead through things like paint, service lines or historic use of leaded gasoline. On Oct. 16, 2025 the EPA under President Donald Trump, raised that guidance to 200 ppm whether an area has multiple exposures to lead or not.</p>";
 		} else if (value < 100) {
-			message = "An EPA sample on " sample_date + " found a portion of this property contained less 100 ppm of lead in the soil. It is not recommended for further evaluation by any past or present federal guidance."
+			message = "An EPA sample on " + sample_date + " found a portion of this property contained less 100 ppm of lead in the soil. It is not recommended for further evaluation by any past or present federal guidance.";
+		
 		}
 	  }
 
