@@ -1,4 +1,4 @@
-"SAID","sample_address","zipcode","soil_remediation_status","soil_sample_date","soil_sample_date_fix","high_lead_result"
+"SAID","sample_address","zipcode","soil_remediation_status","soil_remediation_date","soil_sample_date","high_lead_result"
 14754,"3101 S 2 ST",68108,"Eligible",NA,2004-07-19,841.79
 36795,"5117 N 14 ST-E",68110,"Ineligible",NA,2005-12-19,106.71
 80048,"5120 RAVEN OAKS DR",68152,NA,NA,NA,NA
