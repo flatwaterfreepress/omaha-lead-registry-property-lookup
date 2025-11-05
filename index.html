@@ -38,7 +38,7 @@
     
   <ul id="suggestions"></ul>
   <div id="details"></div>
-  <button id="reset" class="border py-1 px-2 text-xs rounded-full mt-4 text-gray-500 hover:text-blue-600 border-gray-100">Reset</button>
+  <button id="reset" class="border py-1 px-2 text-xs rounded-full mt-4 text-gray-500 hover:text-blue-600 border-gray-100">Reset search</button>
 	</div>
   
   <div id="footer" class="mt-5">
@@ -141,10 +141,10 @@
 		}
 	  
 		if (message) {
-			table += `<div class="text-sm p-4 leading-5 message ${cssClass}"><p class="text-sm text-gray-600  mb-4 ">History</p><p class="mb-4">${message}</p></div>`;
+			table += `<div class="text-sm p-4 leading-5 message ${cssClass}"><p class="text-sm text-gray-600 mb-4 ">History</p><p class="mb-4">${message}</p></div>`;
 		  }
 	  
-	   table += '<table class="table-auto w-full rounded-sm text-sm text-gray-600"><tbody>';
+	   table += '<table class="table-auto w-full rounded-sm text-sm text-gray-600 mt-4"><tbody>';
 	  
 	  let formatted_value = ''
 	  
@@ -154,7 +154,7 @@
 		  formatted_value = 'NA';
 	  }
 	  
-	  table += '<tr><td>Highest Test Result</td><td class="font-medium">' + formatted_value + ' </td></tr><tr><td>Soil Test Sample Date</td><td class="font-medium">' + record.soil_sample_date + '</td></tr><tr><td>Remediation Status</td><td class="font-medium">' + record.soil_remediation_status + '</td></tr><tr><td>Remediation Date</td><td class="font-medium">' + record.soil_remediation_date + '</td></tr></tbody></table>';
+	  table += '<tr><td>Highest Test Result</td><td class="font-medium">' + formatted_value + ' </td></tr><tr><td>Soil Test Sample Date</td><td class="font-medium">' + record.soil_sample_date + '</td></tr><tr><td>Remediation Status</td><td class="font-medium">' + record.soil_remediation_status + '</td></tr><tr><td>Remediation Date</td><td class="font-medium">' + record.soil_remediation_date + '</td></tr></tbody></table><p class="text-[10px] text-gray-400 p-4 text-right"><a class="underline" href="https://lead-registry.cityofomaha-ne.gov/en-US/dashboard/' + record.said + '" title="Omaha Lead Registry" target="_blank">See property in Omaha Lead Registry »</a></p>';
 	  
 	  
 
