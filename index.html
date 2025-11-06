@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Omaha Lead Lookup - Flatwater Free Press</title>
-  <meta name="description" content="The Environmental Protection Agency has sampled soil for lead at more than 40,000 properties across Omaha’s east side. Type in an address to see how much lead was measured there." />"
+  <meta name="description" content="The Environmental Protection Agency has sampled soil for lead at more than 40,000 properties across Omaha’s east side. Type in an address to see how much lead was measured there." />
 
 	<!-- Tailwind CDN -->  
   <script src="https://cdn.tailwindcss.com"></script>
@@ -34,18 +34,15 @@
 	  <input type="text" id="search" placeholder="Enter address" class="w-full pl-12 pr-4 py-2 border-2 border-gray-300 rounded-lg focus:border-blue-600 focus:outline-none text-md">
 	</div>
 	
-	<p id="records" class="text-xs font-light text-gray-400 my-5"></p>
-  
-    
   <ul id="suggestions"></ul>
   <div id="details"></div>
   <button id="reset" class="border py-1 px-2 text-xs rounded-full mt-4 text-gray-500 hover:text-blue-600 border-gray-100">Reset search</button>
 	</div>
   
   <div id="footer" class="mt-5">
-	  <p class="text-xs text-gray-500 mb-4 font-medium">Source: City of Omaha, Omaha Lead Registry</p>
+	  <p class="text-xs text-gray-500 mb-2">Sources: City of Omaha, Omaha Lead Registry</p>
 	  
-		  <p class="text-xs text-gray-400 font-light leading-[1.2rem] mb-4">To learn more about the City of Omaha’s lead program contact its Lead Information Office at (402) 731-3045 or <a href="mailto:contact@omahalead.org" class="underline"> contact@omahalead.org</a>. You can learn more about lead and access other services including potential home inspections from the Douglas County Health Department. More information on the Omaha Lead Superfund site and contacts for site managers can be found on the EPA’s website.</p>
+	  <p class="text-xs text-gray-400 font-light leading-[1.2rem] mb-4">For more information about lead, contact the <a class="underline" href="https://planninghcd.cityofomaha.org/lead-hazard-programs" target="_blank">City of Omaha's Lead Information Office</a> or the <a class="underline" href="" target="_blank">Douglas County Health Department</a>.</p>
   </div>
 
 	
@@ -61,7 +58,6 @@
 		data = json;
 		fuse = new Fuse(data, { keys: ['sample_address'], threshold: 0.3 });
 	
-		records.innerHTML = data.length.toLocaleString() + ' records in this database' ;
 	  });
 
 	const searchInput = document.getElementById('search');
@@ -69,7 +65,6 @@
 	const details = document.getElementById('details');
 	const message_text = document.getElementById('message');
 	const resetBtn = document.getElementById('reset');
-	const records = document.getElementById('records');
 
 
 	searchInput.addEventListener('input', () => {
@@ -155,7 +150,7 @@
 		  formatted_value = 'NA';
 	  }
 	  
-	  table += '<tr><td>Highest Test Result</td><td class="font-medium">' + formatted_value + ' </td></tr><tr><td>Soil Test Sample Date</td><td class="font-medium">' + record.soil_sample_date + '</td></tr><tr><td>Remediation Status</td><td class="font-medium">' + record.soil_remediation_status + '</td></tr><tr><td>Remediation Date</td><td class="font-medium">' + record.soil_remediation_date + '</td></tr></tbody></table><p class="text-[10px] text-gray-400 p-4 text-right"><a class="underline" href="https://lead-registry.cityofomaha-ne.gov/en-US/dashboard/' + record.said + '" title="Omaha Lead Registry" target="_blank">See property in Omaha Lead Registry »</a></p>';
+	  table += '<tr><td>Highest Test Result</td><td class="font-medium">' + formatted_value + ' </td></tr><tr><td>Soil Test Sample Date</td><td class="font-medium">' + record.soil_sample_date + '</td></tr><tr><td>Remediation Status</td><td class="font-medium">' + record.soil_remediation_status + '</td></tr><tr><td>Remediation Date</td><td class="font-medium">' + record.soil_remediation_date + '</td></tr></tbody></table><p class="text-[10px] text-gray-400 p-4"><a class="underline" href="https://lead-registry.cityofomaha-ne.gov/en-US/dashboard/' + record.said + '" title="Omaha Lead Registry" target="_blank">See property in Omaha Lead Registry »</a></p>';
 	  
 	  
 
