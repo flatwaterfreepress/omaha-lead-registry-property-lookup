@@ -42,7 +42,9 @@
   <div id="footer" class="mt-5 max-w-screen-sm">
 	  <p class="text-xs text-gray-400 mb-2">Search tool by Flatwater Free Press. Data source: Omaha Lead Registry</p>
 	  
-	  <p class="text-xs text-gray-500 font-light leading-[1.2rem] mb-4">For more information about lead, contact the <a class="underline" href="https://planninghcd.cityofomaha.org/lead-hazard-programs" target="_blank">City of Omaha's Lead Information Office</a> or the <a class="underline" href="" target="_blank">Douglas County Health Department</a>.</p>
+	  <p class="text-xs text-gray-500 font-light leading-[1.2rem] mb-2">For more information about lead, contact the <a class="underline" href="https://planninghcd.cityofomaha.org/lead-hazard-programs" target="_blank">City of Omaha's Lead Information Office</a> or the <a class="underline" href="" target="_blank">Douglas County Health Department</a>.</p>
+	  
+	  <p class="text-xs text-gray-500 font-light leading-[1.2rem] mb-2">To request free testing for your property, <a href="https://flatwaterfreepress.org/lead-testing/" target="_blank" class="underline">apply here »</a></p>
   </div>
 
 	
@@ -93,7 +95,7 @@
 	function showDetails(record) {
 	  if (!record) return;
 	  
-	  let table = '<div class="border shadow-sm mt-7 rounded-lg"><h3 class="text-lg font-semibold p-4 bg-blue-950 text-white rounded-t-lg">' + record.sample_address + '</h3><p id="message"></p>';
+	  let table = '<div class="border shadow-sm mt-7 rounded-lg"><h3 class="text-xl font-semibold p-4 bg-[#242d3c]/75 text-white rounded-t-lg">' + record.sample_address + '</h3><p id="message"></p>';
 	  let message_wrapper = '';
 	  
 		// Conditional message based on soil_high_lead_result
@@ -133,18 +135,35 @@
 		  
 		  }
 		} else {
-			message = "This property has not been tested or remediated. For more information.</p><p> To learn more about the City of Omaha’s lead program contact its Lead Information Office at (402) 731-3045 or contact@omahalead.org."
+			message = "This property has not been tested or remediated.</p><p> To learn more about the City of Omaha’s lead program contact its Lead Information Office at (402) 731-3045 or contact@omahalead.org."
 		}
 	  
 	  
 	  
 	  
 	  let formatted_value = ''
+	  let valueClass = 'text-gray-900';
 	  
 	  if (!isNaN(value)) { 
-		  formatted_value = value + ' <span class="text-lg font-normal text-gray-600">ppm</span>';
+		  if (value > 400) {
+			  valueClass = 'text-[#008fdf]';
+		  } else if (value >= 200) {
+			  valueClass = 'text-[#006094]';
+		  } else {
+			  valueClass = 'text-[#0b486f]';
+		  }
+		  formatted_value = '<span class="' + valueClass + '">' + value + '</span> <span class="text-lg font-normal text-gray-600">ppm</span>';
 	  } else {
 		  formatted_value = 'NA';
+	  }
+	  
+	  let statusColor = 'bg-yellow-500';
+	  if (status === 'Remediated') {
+		  statusColor = 'bg-[#008fdf]';
+	  } else if (status === 'Eligible') {
+		  statusColor = 'bg-green-600';
+	  } else if (status === 'Ineligible') {
+		  statusColor = 'bg-red-500';
 	  }
 	  
 	  if (status != 'NA') {
@@ -153,7 +172,7 @@
 		  formatted_status = 'Not Tested';
 	  }
 	  
-	  table += '<div class="grid grid-cols-2 p-4 pt-8 pb-0 mb-4"><div><p class="text-gray-500/75 text-xs uppercase mb-1">Highest Test</p><p class="inline-block font-medium text-2xl pt-1">' + formatted_value + ' </p></div><div><p class="text-gray-500/75 text-xs uppercase mb-1">STATUS</p><p class="font-medium text-sm flex inline-flex gap-2 items-center border mt-1 py-1 px-4 pl-3 rounded-full"><span class="inline-flex size-2 rounded-full bg-gray-500"></span><span>' + formatted_status + '</span></p></div></div>';
+	  table += '<div class="grid grid-cols-2 p-4 pt-8 pb-0 mb-4"><div><p class="text-gray-500/75 text-xs uppercase mb-1">Highest Test</p><p class="inline-block font-medium text-2xl pt-1">' + formatted_value + ' </p></div><div><p class="text-gray-500/75 text-xs uppercase mb-1">STATUS</p><p class="font-medium text-sm flex inline-flex gap-2 items-center border mt-1 py-1 px-4 pl-3 rounded-full"><span class="inline-flex size-2 rounded-full ' + statusColor + ' status-indicator"></span><span>' + formatted_status + '</span></p></div></div>';
 	  
 	  
 		if (message) {
