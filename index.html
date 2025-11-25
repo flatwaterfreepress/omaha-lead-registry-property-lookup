@@ -135,7 +135,7 @@
 		  
 		  }
 		} else {
-			message = "This property has not been tested or remediated.</p><p> To learn more about the City of Omaha’s lead program contact its Lead Information Office at (402) 731-3045 or contact@omahalead.org."
+			message = "<p>This property has not been tested or remediated.</p><p> To learn more about the City of Omaha’s lead program contact its Lead Information Office at (402) 731-3045 or contact@omahalead.org."
 		}
 	  
 	  
@@ -176,7 +176,7 @@
 	  
 	  
 		if (message) {
-			table += `<div class="text-sm p-4 pt-0 leading-5 message ${cssClass}"><p class="mb-4">${message}</p></div>`;
+			table += `<div class="text-md p-4 pt-0 leading-5 border-t border-b message ${cssClass}"><p class="mb-4">${message}</p></div>`;
 		  }
 		  
 	  table += '<p class="text-xs text-gray-500 p-4"><a class="underline" href="https://lead-registry.cityofomaha-ne.gov/en-US/dashboard/' + record.said + '" title="Omaha Lead Registry" target="_blank">See property details in Omaha Lead Registry »</a></p>';
